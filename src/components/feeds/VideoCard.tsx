@@ -6,6 +6,7 @@ import { TbMessage } from "react-icons/tb";
 import { CommentsDrawer } from "./CommentsDrawer";
 import { Post } from "@/types";
 import { useBookmarkPost, useLikePost } from "@/hooks/usePostActions";
+import { useAuth } from "@/hooks/useAuth";
 
 export function VideoCard({ post, active }: { post: Post; active: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null);
