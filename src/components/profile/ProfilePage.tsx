@@ -9,8 +9,15 @@ import {
   BellPlus,
   ChevronLeft,
   EllipsisVertical,
+  LogOut,
   Plus,
 } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
@@ -21,10 +28,12 @@ import {
 import { profileAPI, postAPI } from "@/services/endpoints";
 import { uploadToCloudinary } from "@/lib/uploadToCloudinary";
 import { Spinner } from "../kibo-ui/spinner";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function ProfilePage({ username }: { username: string }) {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
+  const { logout } = useAuth();
 
   const { data: profile, isLoading } = useProfile(username);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -85,14 +94,29 @@ export default function ProfilePage({ username }: { username: string }) {
   return (
     <main className='min-h-screen bg-black text-white font-sans py-5'>
       {/* Header */}
-      <div className='fixed top-5 left-0 w-full flex justify-between items-center px-4 z-10'>
+      <div className='fixed top-5 left-0 w-full flex justify-between items-center px-4 z-20'>
         <button onClick={() => router.back()}>
           <ChevronLeft size={28} />
         </button>
         <p className='font-medium text-sm'>{profile.username}</p>
         <div className='flex gap-4'>
           <Bell size={20} />
-          <EllipsisVertical size={20} />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className='rounded-full hover:bg-muted'>
+                <EllipsisVertical size={20} />
+              </button>
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent align='end' className='w-40'>
+              <DropdownMenuItem
+                onClick={() => logout()}
+                className='cursor-pointer text-red-400'>
+                <LogOut className='mr-2 h-4 w-4' />
+                Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
 

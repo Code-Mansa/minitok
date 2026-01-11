@@ -159,59 +159,56 @@ export function VideoCard({ post, active }: { post: Post; active: boolean }) {
             </div>
           )}
 
-          {!openComments ||
-            (user && (
-              <div className='absolute right-4 bottom-30 z-20 flex flex-col items-center gap-6 text-white'>
-                {/* Like */}
-                <motion.button whileTap={{ scale: 1.4 }} onClick={handleLike}>
-                  <Heart
-                    className={
-                      isLiked ? "fill-red-500 text-red-500" : "text-white"
-                    }
-                  />
-                  {likesCount > 0 && (
-                    <span className='text-xs mt-1'>{likesCount}</span>
-                  )}
-                </motion.button>
+          {!openComments && user.username && (
+            <div className='absolute right-4 bottom-30 z-20 flex flex-col items-center gap-6 text-white'>
+              {/* Like */}
+              <motion.button whileTap={{ scale: 1.4 }} onClick={handleLike}>
+                <Heart
+                  className={
+                    isLiked ? "fill-red-500 text-red-500" : "text-white"
+                  }
+                />
+                {likesCount > 0 && (
+                  <span className='text-xs mt-1'>{likesCount}</span>
+                )}
+              </motion.button>
 
-                {/* Comment */}
-                <button onClick={() => setOpenComments(true)}>
-                  <TbMessage size={24} />
-                  {comments > 0 && (
-                    <span className='text-xs mt-1 block text-center'>
-                      {comments}
-                    </span>
-                  )}
-                </button>
+              {/* Comment */}
+              <button onClick={() => setOpenComments(true)}>
+                <TbMessage size={24} />
+                {comments > 0 && (
+                  <span className='text-xs mt-1 block text-center'>
+                    {comments}
+                  </span>
+                )}
+              </button>
 
-                {/* Bookmark */}
-                <motion.button
-                  whileTap={{ scale: 1.4 }}
-                  onClick={handleBookmark}>
-                  <motion.svg
-                    animate={{ scale: isBookmarked ? 1 : [1, 1.4, 1] }}
-                    transition={{ duration: 0.25 }}
-                    className={
-                      isBookmarked
-                        ? "fill-yellow-400 drop-shadow-md"
-                        : "fill-white"
-                    }
-                    width='28'
-                    height='28'
-                    viewBox='0 0 24 24'>
-                    <path d='M6 2a2 2 0 0 0-2 2v18l8-5 8 5V4a2 2 0 0 0-2-2H6z' />
-                  </motion.svg>
-                  {bookmarkCount > 0 && (
-                    <span className='text-xs mt-1'>{bookmarkCount}</span>
-                  )}
-                </motion.button>
+              {/* Bookmark */}
+              <motion.button whileTap={{ scale: 1.4 }} onClick={handleBookmark}>
+                <motion.svg
+                  animate={{ scale: isBookmarked ? 1 : [1, 1.4, 1] }}
+                  transition={{ duration: 0.25 }}
+                  className={
+                    isBookmarked
+                      ? "fill-yellow-400 drop-shadow-md"
+                      : "fill-white"
+                  }
+                  width='28'
+                  height='28'
+                  viewBox='0 0 24 24'>
+                  <path d='M6 2a2 2 0 0 0-2 2v18l8-5 8 5V4a2 2 0 0 0-2-2H6z' />
+                </motion.svg>
+                {bookmarkCount > 0 && (
+                  <span className='text-xs mt-1'>{bookmarkCount}</span>
+                )}
+              </motion.button>
 
-                {/* Share */}
-                <button>
-                  <Share size={24} />
-                </button>
-              </div>
-            ))}
+              {/* Share */}
+              <button>
+                <Share size={24} />
+              </button>
+            </div>
+          )}
         </motion.div>
 
         <CommentsDrawer
