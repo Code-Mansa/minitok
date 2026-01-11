@@ -8,8 +8,8 @@ import { useAuth } from "@/hooks/useAuth";
 export function BottomNav() {
   const { user } = useAuth();
   return (
-    <nav className='fixed bottom-0 left-0 right-0 z-50 bg-black text-white'>
-      <div className='flex items-center justify-between px-6 pt-2 pb-[calc(env(safe-area-inset-bottom)+8px)]'>
+    <nav className='fixed bottom-0 left-0 right-0 z-50 bg-black text-white md:max-w-xs md:mx-auto'>
+      <div className='flex items-center justify-between pt-2 pb-[calc(env(safe-area-inset-bottom)+8px)]'>
         {/* Home */}
         <NavItem href='/' icon={<Home size={22} />} label='Home' active />
 
@@ -55,7 +55,9 @@ function NavItem({
   active?: boolean;
 }) {
   return (
-    <Link href={href} className='flex flex-col items-center gap-1 text-xs'>
+    <Link
+      href={href}
+      className='flex flex-1 flex-col items-center gap-1 text-xs'>
       <div className={active ? "text-white" : "text-white/70"}>{icon}</div>
       <span className={active ? "text-white" : "text-white/70"}>{label}</span>
     </Link>

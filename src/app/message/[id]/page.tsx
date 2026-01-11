@@ -128,7 +128,7 @@ export default function ChatPage() {
           />
           <button
             onClick={sendMessage}
-            className='absolute right-5 bottom-0 p-2 rounded-full bg-blue-500 disabled:opacity-50'
+            className='absolute right-2 bottom-0.5 p-1.5 flex items-center justify-center rounded-full bg-linear-to-br from-yellow-600 to-yellow-500 disabled:opacity-50'
             disabled={!input.trim()}>
             <Send size={18} />
           </button>

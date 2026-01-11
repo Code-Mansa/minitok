@@ -17,13 +17,14 @@ export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const redirectTo = searchParams.get("redirect") || "/";
+  // ✅ Lazy initialization avoids useEffect and cascading renders
+  const redirectTo = searchParams?.get("redirect") || "/";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await login({ email, password });
-      router.push(redirectTo); // ✅ redirect to intended page
+      router.push(redirectTo); // redirect to intended page
     } catch (error) {
       console.error("Login failed:", error);
     }
@@ -32,7 +33,7 @@ export default function LoginPage() {
   return (
     <div className='min-h-screen bg-black text-white flex items-center flex-col gap-8 justify-center'>
       <p className='font-bold text-yellow-500 text-xl'>
-        Zemo<sub>App</sub>{" "}
+        Zemo<sub>App</sub>
       </p>
       <Card className='w-96 p-8 shadow-none bg-transparent border-0 px-0'>
         <h1 className='text-2xl font-bold mb-2'>Welcome Back</h1>
@@ -42,9 +43,8 @@ export default function LoginPage() {
           </div>
         )}
         <form onSubmit={handleSubmit} className='space-y-4'>
-          <div className=''>
+          <div>
             <Label>Email</Label>
-
             <Input
               type='email'
               placeholder='Email'
@@ -57,7 +57,6 @@ export default function LoginPage() {
 
           <div>
             <Label>Password</Label>
-
             <Input
               type='password'
               placeholder='Password'
@@ -66,7 +65,6 @@ export default function LoginPage() {
               className='rounded-full focus:bg-transparent mt-1'
               required
             />
-
             <Link href='/' className='text-sm flex justify-end mt-1'>
               Forget Password
             </Link>
