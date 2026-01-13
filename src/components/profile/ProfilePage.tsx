@@ -39,7 +39,7 @@ export default function ProfilePage({ username }: { username: string }) {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("posts");
   const followMutation = useToggleFollow();
-  const { data: tabPosts = [], isLoading: postsLoading } = useProfilePosts(
+  const { data: tabPosts, isLoading: postsLoading } = useProfilePosts(
     profile?.username,
     activeTab
   );
@@ -92,7 +92,7 @@ export default function ProfilePage({ username }: { username: string }) {
   const isMe = profile.isMe;
 
   return (
-    <main className='min-h-screen bg-black text-white font-sans py-5'>
+    <main className='max-h-screen bg-black text-white font-sans pt-5 overflow-y-auto'>
       {/* Header */}
       <div className='fixed top-5 left-0 w-full flex justify-between items-center px-4 z-20'>
         <button onClick={() => router.back()}>
@@ -187,7 +187,7 @@ export default function ProfilePage({ username }: { username: string }) {
                 <Button className='col-span-2 bg-gray-200 text-black'>
                   Promotions
                 </Button>
-                <Button size='icon' className='bg-gray-200 text-black'>
+                <Button size='icon' className='bg-gray-200 text-black w-full'>
                   <Bell />
                 </Button>
               </>

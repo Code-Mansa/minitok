@@ -7,6 +7,8 @@ import { CommentsDrawer } from "./CommentsDrawer";
 import { Post } from "@/types";
 import { useBookmarkPost, useLikePost } from "@/hooks/usePostActions";
 import { useAuth } from "@/hooks/useAuth";
+import { ShareDrawer } from "./ShareDrawer";
+import Link from "next/link";
 
 export function VideoCard({ post, active }: { post: Post; active: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -31,6 +33,7 @@ export function VideoCard({ post, active }: { post: Post; active: boolean }) {
   const [expanded, setExpanded] = useState(false);
   const textRef = useRef<HTMLParagraphElement>(null);
   const [collapsedHeight, setCollapsedHeight] = useState(0);
+  const [openShare, setOpenShare] = useState(false);
 
   // Instant optimistic toggle on click
   const handleLike = (e: React.MouseEvent) => {
@@ -133,7 +136,11 @@ export function VideoCard({ post, active }: { post: Post; active: boolean }) {
 
           {!openComments && (
             <div className='absolute bottom-17 left-4 z-20 text-white space-y-2 max-w-[80%]'>
-              <p className='font-semibold'>{post.author.username}</p>
+              <Link
+                href={`/profile/${post.author.username}`}
+                className='font-semibold'>
+                {post?.author.username}
+              </Link>
               <motion.div layout className='text-sm opacity-90 max-w-full'>
                 <motion.div
                   initial={false}
@@ -141,11 +148,11 @@ export function VideoCard({ post, active }: { post: Post; active: boolean }) {
                   transition={{ type: "spring", stiffness: 260, damping: 30 }}
                   className='overflow-hidden'>
                   <p ref={textRef} className='leading-snug'>
-                    {post.caption}
+                    {post?.caption}
                   </p>
                 </motion.div>
 
-                {post.caption?.length > 60 && (
+                {(post.caption?.length ?? 0) > 60 && (
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -159,7 +166,7 @@ export function VideoCard({ post, active }: { post: Post; active: boolean }) {
             </div>
           )}
 
-          {!openComments && user.username && (
+          {!openComments && (
             <div className='absolute right-4 bottom-30 z-20 flex flex-col items-center gap-6 text-white'>
               {/* Like */}
               <motion.button whileTap={{ scale: 1.4 }} onClick={handleLike}>
@@ -204,7 +211,7 @@ export function VideoCard({ post, active }: { post: Post; active: boolean }) {
               </motion.button>
 
               {/* Share */}
-              <button>
+              <button onClick={() => setOpenShare(true)}>
                 <Share size={24} />
               </button>
             </div>
@@ -216,6 +223,12 @@ export function VideoCard({ post, active }: { post: Post; active: boolean }) {
           onOpenChange={setOpenComments}
           postId={post._id}
           commentsCount={comments}
+        />
+
+        <ShareDrawer
+          open={openShare}
+          onOpenChange={setOpenShare}
+          postId={post._id}
         />
       </motion.div>
     </>

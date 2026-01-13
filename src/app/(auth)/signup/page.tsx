@@ -25,11 +25,11 @@ export default function SignupPage() {
   };
 
   return (
-    <div className='flex flex-col gap-8 items-center justify-center min-h-screen'>
+    <div className='flex flex-col gap-8 items-center justify-center max-h-screen mt-10'>
       <p className='font-bold text-yellow-500 text-xl'>
         Zemo<sub>App</sub>{" "}
       </p>
-      <Card className='w-96 p-8 shadow-none bg-transparent border-0 px-0'>
+      <Card className='w-full px-4 md:w-96 md:p-8 shadow-none bg-transparent border-0'>
         <h1 className='text-2xl font-bold mb-6'>Sign Up</h1>
 
         {isRegisterError && (

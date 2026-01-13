@@ -35,11 +35,11 @@ export default function LoginPage({
   };
 
   return (
-    <div className='min-h-screen bg-black text-white flex items-center flex-col gap-8 justify-center'>
+    <div className='max-h-screen mt-10 bg-black text-white flex items-center flex-col gap-8 justify-center'>
       <p className='font-bold text-yellow-500 text-xl'>
         Zemo<sub>App</sub>
       </p>
-      <Card className='w-96 p-8 shadow-none bg-transparent border-0 px-0'>
+      <Card className='px-4 w-full md:w-96 md:p-8 shadow-none bg-transparent border-0'>
         <h1 className='text-2xl font-bold mb-2'>Welcome Back</h1>
         {loginError && (
           <div className='bg-red-100 text-red-600 p-3 rounded-lg text-sm'>

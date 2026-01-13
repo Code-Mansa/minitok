@@ -1,7 +1,6 @@
 "use client";
 
 import { Search, ChevronLeft } from "lucide-react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { MessageFloatingButton } from "@/components/messages/MessageDrawer";
@@ -37,7 +36,7 @@ export default function MessagesPage() {
   const router = useRouter();
 
   return (
-    <main className='min-h-screen bg-black text-white'>
+    <main className='max-h-screen bg-black text-white'>
       {/* Header */}
       <header className='sticky top-0 z-20 bg-black px-4 pt-5 pb-3'>
         <div className='flex items-center justify-between'>
@@ -67,13 +66,12 @@ export default function MessagesPage() {
             whileTap={{ scale: 0.98 }}
             className='flex items-center gap-3 px-4 py-3'>
             <div className='relative'>
-              <Image
+              <img
                 src={chat.avatar}
                 alt={chat.username}
-                width={48}
-                height={48}
-                className='rounded-full object-cover'
+                className='w-12 h-12 rounded-full object-cover'
               />
+
               {chat.unread && (
                 <span className='absolute top-0 right-0 h-3 w-3 rounded-full bg-red-500' />
               )}

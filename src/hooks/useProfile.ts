@@ -51,11 +51,10 @@ export function useProfilePosts(username: string, tab: string) {
     queryKey: ["profilePosts", username, tab],
     queryFn: async () => {
       const res = await api.get(`/users/${username}/posts?tab=${tab}`);
-      return res.data.posts ?? []; // Always return array
+      return res.data.posts ?? [];
     },
     enabled: !!username,
-    placeholderData: [], // ← Critical: shows empty grid instead of nothing/flash
-    staleTime: 1000 * 60 * 2, // 2 minutes
-    gcTime: 1000 * 60 * 5, // Keep cache longer
+    staleTime: 1000 * 60 * 2,
+    gcTime: 1000 * 60 * 5,
   });
 }

@@ -6,12 +6,17 @@ import { ChevronLeft, Image as ImageIcon, Video, Camera } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useCreatePost } from "@/hooks/useCreatePost";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function CreatePostPage() {
+  const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [progress, setProgress] = useState(0);
   const createPost = useCreatePost();
+  const { user } = useAuth();
 
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
@@ -107,7 +112,16 @@ export default function CreatePostPage() {
       });
 
       clearMedia();
-      alert("Post uploaded successfully!");
+      toast.success(
+        <p className='py-2 text-sm font-semibold'>
+          Post uploaded successfully!
+        </p>
+      );
+
+      // Navigate after a short delay so user sees the toast
+      setTimeout(() => {
+        router.push(`/profile/${user.username}`);
+      }, 1000); // 1.5s delay
     } catch {
       alert("Upload failed");
     }
@@ -123,7 +137,15 @@ export default function CreatePostPage() {
       {/* Header */}
       <header className='flex items-center justify-between px-4 py-3 border-b border-white/10'>
         <button
-          onClick={step === "details" ? () => setStep("picker") : clearMedia}>
+          onClick={() => {
+            if (step === "details") {
+              setStep("picker");
+            } else if (window.history.length > 1) {
+              router.back();
+            } else {
+              clearMedia();
+            }
+          }}>
           <ChevronLeft />
         </button>
         <p className='font-semibold'>

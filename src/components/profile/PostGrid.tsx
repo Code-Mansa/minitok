@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { PostCard } from "./PostCard";
 
@@ -17,15 +18,10 @@ type PostGridProps = {
   activeTab: string;
 };
 
-export function PostGrid({
-  posts = [],
-  isLoading = false,
-  activeTab,
-}: PostGridProps) {
-  // Skeleton placeholders
+export function PostGrid({ posts, isLoading, activeTab }: PostGridProps) {
   const skeletons = Array.from({ length: 9 }, (_, i) => i);
 
-  if (isLoading) {
+  if (isLoading || posts === undefined) {
     return (
       <div className='grid grid-cols-3 gap-px p-px'>
         {skeletons.map((i) => (
@@ -60,13 +56,13 @@ export function PostGrid({
         transition={{ duration: 0.2 }}
         className='grid grid-cols-3 gap-px'>
         {posts.map((post) => (
-          <PostCard
+          <Link
             key={post._id}
-            mediaUrl={post.mediaUrl}
-            thumbnailUrl={post.thumbnailUrl}
-            viewsCount={post.viewsCount ?? 0}
-            type={post.type}
-          />
+            href={`/?post=${post._id}`}
+            scroll={false} // important for feed UX
+          >
+            <PostCard {...post} />
+          </Link>
         ))}
       </motion.div>
     </AnimatePresence>
