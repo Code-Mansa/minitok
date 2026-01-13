@@ -214,7 +214,7 @@ export default function ProfilePage({ username }: { username: string }) {
                   className='bg-gray-200 col-span-2 text-black'>
                   Message
                 </Button>
-                <Button size='icon' className='bg-gray-200 text-black'>
+                <Button size='icon' className='bg-gray-200 text-black w-full'>
                   <BellPlus />
                 </Button>
               </>
