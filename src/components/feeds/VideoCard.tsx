@@ -136,11 +136,14 @@ export function VideoCard({ post, active }: { post: Post; active: boolean }) {
 
           {!openComments && (
             <div className='absolute bottom-17 left-4 z-20 text-white space-y-2 max-w-[80%]'>
-              <Link
-                href={`/profile/${post.author.username}`}
-                className='font-semibold'>
-                {post?.author.username}
-              </Link>
+              {post?.author?.username && (
+                <Link
+                  href={`/profile/${post.author.username}`}
+                  className='font-semibold'>
+                  {post.author.username}
+                </Link>
+              )}
+
               <motion.div layout className='text-sm opacity-90 max-w-full'>
                 <motion.div
                   initial={false}
