@@ -87,3 +87,25 @@ export function useBookmarkPost(postId: string) {
     },
   });
 }
+
+export function useViewPost(postId: string) {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: async () => {
+      const res = await api.post<{ viewsCount: number }>(
+        `/posts/${postId}/view`
+      );
+      return res.data; // Axios automatically returns JSON in res.data
+    },
+    onSuccess: (data) => {
+      // Update cached post data if you have it
+      queryClient.setQueryData(["post", postId], (old: any) => ({
+        ...old,
+        viewsCount: data.viewsCount,
+      }));
+    },
+  });
+
+  return mutation;
+}

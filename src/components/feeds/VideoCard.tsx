@@ -5,8 +5,11 @@ import { usePlayerStore } from "@/lib/store";
 import { TbMessage } from "react-icons/tb";
 import { CommentsDrawer } from "./CommentsDrawer";
 import { Post } from "@/types";
-import { useBookmarkPost, useLikePost } from "@/hooks/usePostActions";
-import { useAuth } from "@/hooks/useAuth";
+import {
+  useBookmarkPost,
+  useLikePost,
+  useViewPost,
+} from "@/hooks/usePostActions";
 import { ShareDrawer } from "./ShareDrawer";
 import Link from "next/link";
 
@@ -14,10 +17,13 @@ export function VideoCard({ post, active }: { post: Post; active: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const bgVideoRef = useRef<HTMLVideoElement>(null);
   const { muted } = usePlayerStore();
-  const { user } = useAuth();
 
   const likeMutation = useLikePost(post._id);
   const bookmarkMutation = useBookmarkPost(post._id);
+  const viewMutation = useViewPost(post._id);
+
+  const [views, setViews] = useState(post.viewsCount ?? 0);
+  const hasViewed = useRef(false);
 
   // Optimistic local state for instant UI feedback
   const [isLiked, setIsLiked] = useState(() => !!post.likedByMe);
@@ -58,6 +64,17 @@ export function VideoCard({ post, active }: { post: Post; active: boolean }) {
     }
     setLastTap(now);
   };
+
+  useEffect(() => {
+    if (!active) return;
+    if (hasViewed.current) return;
+
+    hasViewed.current = true;
+
+    viewMutation.mutate(undefined, {
+      onSuccess: (data: any) => setViews(data.viewsCount),
+    });
+  }, [active, post._id, viewMutation]);
 
   // Video play/pause
   useEffect(() => {
