@@ -74,12 +74,10 @@ export default function ChatPage() {
         <button onClick={() => router.back()}>
           <ChevronLeft />
         </button>
-        <Image
+        <img
           src={MOCK_PEER.avatar}
           alt='avatar'
-          width={36}
-          height={36}
-          className='rounded-full'
+          className='w-9 h-9 rounded-full'
         />
         <div>
           <p className='text-sm font-medium'>{MOCK_PEER.name}</p>
@@ -88,7 +86,7 @@ export default function ChatPage() {
       </header>
 
       {/* ---------------- MESSAGES ---------------- */}
-      <section className='flex-1 overflow-y-auto px-4 py-4 space-y-3'>
+      <section className='h-fit flex-1 overflow-y-auto px-4 py-4 space-y-3 scrollbar-hide'>
         <AnimatePresence initial={false}>
           {messages.map((msg) => (
             <motion.div
@@ -110,7 +108,7 @@ export default function ChatPage() {
       </section>
 
       {/* ---------------- INPUT ---------------- */}
-      <footer className='sticky bottom-0 bg-black border-t border-white/10 py-2'>
+      <footer className='sticky bottom-0 bg-black border-t border-white/10 py-3'>
         <div className='flex items-end gap-2 relative'>
           <textarea
             ref={textareaRef}
